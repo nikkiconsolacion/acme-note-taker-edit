@@ -69,7 +69,6 @@ input, button {
             </ul>
           </div>
         );
-
       };
 
       const Nav = ({ path, notes })=> {
@@ -147,7 +146,7 @@ input, button {
               <Route render={ ({ location } )=> <Nav path={ location.pathname } notes={ notes } />} />
               <h1>Acme Note--taker for { user.id ? user.fullName : '' }</h1>
               <Switch>
-                <Route path='/notes/:id?' render={ ()=> <Notes destroy={ destroy} archived={ false } notes={ notes} update={ update }/> } />
+                <Route exact path='/notes' render={ ()=> <Notes destroy={ destroy} archived={ false } notes={ notes} update={ update }/> } />
                 <Route path='/notes/create' render={ ({ history })=> <Create history={ history } create={ create } notes={ notes } /> } />
                 <Route path='/archived' render={ ()=> <Notes destroy={ destroy } archived={ true } notes={ notes} update={ update }/> } />
                 <Redirect to='/notes' />
