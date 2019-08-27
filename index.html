@@ -94,19 +94,21 @@ input, button {
           this.update = this.update.bind(this);
         }
         update(){
-          this.props.update({ text: this.state.text })
-            .then(()=> this.props.history.push('/notes'))
-            .catch( ex => this.setState({ error: ex.response.data.message }));
+          // this.props.update({ text: this.state.text })
+          //   .then(()=> this.props.push('/notes'))
+          //   .catch( ex => this.setState({ error: ex.response.data.message }));
         }
         render(){
           const { text, error } = this.state;
           const { update } = this;
           return (
+            <div>
             <form onSubmit = { ev => ev.preventDefault() }>
               { !!error && <div className='error'>{error }</div>  }
-              <input value={ text } placeholder='create new note' onChange={ (ev)=> this.setState({ text: ev.target.value }) }/>
+              <input value={ text } placeholder={ text } onChange={ (ev)=> this.setState({ text: ev.target.value }) }/>
               <button disabled={ !text } onClick={ update }>Update</button>
             </form>
+            </div>
           );
         }
       }
@@ -178,9 +180,7 @@ input, button {
                 <Route exact path='/notes' render={ ()=> <Notes destroy={ destroy} archived={ false } notes={ notes} update={ update }/> } />
                 <Route path='/notes/create' render={ ({ history })=> <Create history={ history } create={ create } notes={ notes } /> } />
 
-                <Route path='/notes/:id' render={ ({ history })=> <Update history={ history } update={ update } notes={ notes } /> } />
-
-
+                <Route path='/notes/:id' render={ ()=> <Update  update={ update } notes={ notes } /> } />
 
                 <Route path='/archived' render={ ()=> <Notes destroy={ destroy } archived={ true } notes={ notes} update={ update }/> } />
 
