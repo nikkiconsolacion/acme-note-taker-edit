@@ -67,9 +67,10 @@ input, button {
                   </li>)
               }
             </ul>
-            <Route path='/notes/:id' component={ Update }/>
+
           </div>
         );
+        //<Route path='/notes/:id' component={ Update }/>
       };
 
       const Nav = ({ path, notes })=> {
@@ -176,7 +177,13 @@ input, button {
               <Switch>
                 <Route exact path='/notes' render={ ()=> <Notes destroy={ destroy} archived={ false } notes={ notes} update={ update }/> } />
                 <Route path='/notes/create' render={ ({ history })=> <Create history={ history } create={ create } notes={ notes } /> } />
+
+                <Route path='/notes/:id' render={ ({ history })=> <Update history={ history } update={ update } notes={ notes } /> } />
+
+
+
                 <Route path='/archived' render={ ()=> <Notes destroy={ destroy } archived={ true } notes={ notes} update={ update }/> } />
+
                 <Redirect to='/notes' />
               </Switch>
             </HashRouter>
