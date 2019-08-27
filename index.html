@@ -67,6 +67,7 @@ input, button {
                   </li>)
               }
             </ul>
+            <Route path='/notes/:id' component={ Update }/>
           </div>
         );
       };
@@ -81,6 +82,33 @@ input, button {
           </nav>
         );
       };
+
+      class Update extends Component{
+        constructor(){
+          super();
+          this.state = {
+            text: '',
+            error: ''
+          };
+          this.update = this.update.bind(this);
+        }
+        update(){
+          this.props.update({ text: this.state.text })
+            .then(()=> this.props.history.push('/notes'))
+            .catch( ex => this.setState({ error: ex.response.data.message }));
+        }
+        render(){
+          const { text, error } = this.state;
+          const { update } = this;
+          return (
+            <form onSubmit = { ev => ev.preventDefault() }>
+              { !!error && <div className='error'>{error }</div>  }
+              <input value={ text } placeholder='create new note' onChange={ (ev)=> this.setState({ text: ev.target.value }) }/>
+              <button disabled={ !text } onClick={ update }>Update</button>
+            </form>
+          );
+        }
+      }
 
       class Create extends Component{
         constructor(){
