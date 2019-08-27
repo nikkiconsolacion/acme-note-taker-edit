@@ -85,10 +85,12 @@ input, button {
       };
 
       class Update extends Component{
-        constructor(){
+
+        constructor({ match, notes, id }){
           super();
+          const note = notes.find( note => note.id === id)
           this.state = {
-            text: '',
+            text: note ? note.text : '',
             error: ''
           };
           this.update = this.update.bind(this);
@@ -98,8 +100,19 @@ input, button {
           //   .then(()=> this.props.push('/notes'))
           //   .catch( ex => this.setState({ error: ex.response.data.message }));
         }
+        // componentDidMount(){
+        //   console.log(this.props.notes)
+        //   const id = this.props.match.params.id;
+        //   const note = this.props.notes.find( note => note.id === id)
+        //   //const text = note.text || '';
+        //   //console.log(this.props)
+
+        //   //this.setState({ text });
+        // }
         render(){
+
           const { text, error } = this.state;
+          //console.log(text)
           const { update } = this;
           return (
             <div>
@@ -180,7 +193,7 @@ input, button {
                 <Route exact path='/notes' render={ ()=> <Notes destroy={ destroy} archived={ false } notes={ notes} update={ update }/> } />
                 <Route path='/notes/create' render={ ({ history })=> <Create history={ history } create={ create } notes={ notes } /> } />
 
-                <Route path='/notes/:id' render={ ()=> <Update  update={ update } notes={ notes } /> } />
+                <Route path='/notes/:id' render={ ({ match })=> <Update id={ match.params.id } update={ update } notes={ notes } /> } />
 
                 <Route path='/archived' render={ ()=> <Notes destroy={ destroy } archived={ true } notes={ notes} update={ update }/> } />
 
